@@ -1,7 +1,50 @@
 ﻿@page "/"
+@using MovieSearch.Service
+@using MovieSearch.Data
+@using MovieSearch.Helpness
+@inject IOMDbService service
 
-<h1>Hello, world!</h1>
+<div class="movie-search" style="margin-bottom: 1rem; ">
+        <div class="form-inline my-2 my-lg-0" style="display: flex; ">
+            <input type="text" class="form-control mr-sm-2" style="width: auto; margin-right: 0.5rem" placeholder="Find a movie" @bind-value="@searchTerm" aria-label="Search" />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @onclick="FindMovies">Search</button>
+        </div>
+</div>
+<div class="movies" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center">
+    @if (moviesResult != null)
+    {
+        if (!moviesResult.Success)
+        {
+            foreach (var error in moviesResult.Errors)
+            {
+                <p>@error.Message</p>
+            }
+        }
+        else
+        {
+                @foreach (var movie in moviesResult.Value)
+                {
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@movie.Poster" />
+                    <div class="card-body">
+                        <h5 class="card-title">Title: @movie.Title</h5>
+                        <p class="card-text">Year: @movie.Year</p>
+                        <p class="card-text">IMDB ID: @movie.ImdbID</p>
+                        <a class="btn btn-primary" href="/Movie/@movie.Title">More info</a>
+                    </div>
+                </div>
+                }
+        }
+    }
+</div>
 
-Welcome to your new app.
+@code
+{
+    private string searchTerm;
+    private Result<IEnumerable<Movie>> moviesResult;
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    private async Task FindMovies()
+    {
+        moviesResult = await service.FindMovies(searchTerm);
+    }
+}
