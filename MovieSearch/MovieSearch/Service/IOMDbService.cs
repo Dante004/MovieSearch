@@ -7,6 +7,7 @@ namespace MovieSearch.Service
 {
     public interface IOMDbService
     {
-        Task<Result<IEnumerable<Movie>>> FindMovies(string name);
+        Task<Result<IEnumerable<Movie>>> FindMovies(string value);
+        Task<Result<MovieData>> GetMovieData(string title);
     }
 }
