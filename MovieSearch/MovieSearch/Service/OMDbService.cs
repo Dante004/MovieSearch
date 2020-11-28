@@ -11,15 +11,17 @@ namespace MovieSearch.Service
     public class OMDbService : IOMDbService
     {
         private readonly string _key;
+        private readonly string _omdbUrl;
 
         public OMDbService(IConfiguration configuration)
         {
             _key = configuration.GetValue<string>("OMDb:Key");
+            _omdbUrl = configuration.GetValue<string>("OMDb:Url");
         }
 
         public async Task<Result<IEnumerable<MovieShortData>>> FindMovies(string value)
         {
-            var response = await "http://www.omdbapi.com/"
+            var response = await _omdbUrl
                 .SetQueryParams(new
                 {
                     s = value,
@@ -39,7 +41,7 @@ namespace MovieSearch.Service
 
         public async Task<Result<MovieFullData>> GetMovieData(string title)
         {
-            var response = await "http://www.omdbapi.com/"
+            var response = await _omdbUrl
                 .SetQueryParams(new
                 {
                     t = title,
