@@ -1,0 +1,107 @@
+﻿@page "/Movie/{Title}"
+@using MovieSearch.Service
+@using MovieSearch.Helpness
+@using MovieSearch.Data
+@inject IOMDbService service
+
+
+@if (movieDataResult == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (!movieDataResult.Success)
+    {
+        foreach (var error in movieDataResult.Errors)
+        {
+            <p>@error.Message</p>
+        }
+    }
+    else
+    {
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>@movieDataResult.Value.Title</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1 col-sm-1">
+                <p>@movieDataResult.Value.Year</p>
+            </div>
+            <div class="col-lg-1 col-sm-1">
+                <p>@movieDataResult.Value.Runtime</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-sm-2">
+                <p>IMDB Rating: @movieDataResult.Value.ImdbRating</p>
+            </div>
+            <div class="col-lg-2 col-sm-2">
+                <p>IMDB Votes: @movieDataResult.Value.ImdbVotes</p>
+            </div>
+            <div class="col-lg-2 col-sm-4">
+                <p>Metascore: @movieDataResult.Value.Metascore</p>
+            </div>
+            <div class="col-lg-1 col-sm-4">
+                <p>Rated: @movieDataResult.Value.Rated</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-12 col-md-12">
+                <img src="@movieDataResult.Value.Poster" />
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <p>@movieDataResult.Value.Plot</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <p>Director: @movieDataResult.Value.Director</p>
+                        <p>Writer: @movieDataResult.Value.Writer</p>
+                        <p>Genre: @movieDataResult.Value.Genre</p>
+                        <p>Country: @movieDataResult.Value.Country</p>
+                        <p>Released: @movieDataResult.Value.Released.ToString("yyyy-MM-dd")</p>
+                        <p>Production: @movieDataResult.Value.Production</p>
+                        <p>Language: @movieDataResult.Value.Language</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Ratings:</h2>
+            </div>
+        </div>
+        @foreach (var rating in movieDataResult.Value.Ratings)
+        {
+            <div class="row">
+                <div class="col">
+                    <p>Source: @rating.Source</p>
+                    <p>Value: @rating.Value</p>
+                </div>
+            </div>
+        }
+        <p>Actors: @movieDataResult.Value.Actors</p>
+        <p>Wesite: @movieDataResult.Value.Website</p>
+
+    </div>
+    }
+}
+
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    private Result<MovieData> movieDataResult;
+
+    protected override async Task OnInitializedAsync()
+    {
+        movieDataResult = await service.GetMovieData(Title);
+    }
+
+}
