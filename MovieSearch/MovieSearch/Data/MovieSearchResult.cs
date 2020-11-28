@@ -2,7 +2,7 @@
 
 namespace MovieSearch.Data
 {
-    public class MovieSearchDto
+    public class MovieSearchResult
     {
         public IEnumerable<Movie> Search { get; set; }
         public int TotalResults { get; set; }

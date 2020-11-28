@@ -27,7 +27,7 @@ namespace MovieSearch.Service
                     type = "movie"
                 })
                 .AllowAnyHttpStatus()
-                .GetJsonAsync<MovieSearchDto>();
+                .GetJsonAsync<MovieSearchResult>();
 
             if(!response.Response)
             {
