@@ -30,6 +30,17 @@ a, .btn-link {
     color: red;
 }
 
+.movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center
+}
+
+.movie-search {
+    margin-bottom: 1rem;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
