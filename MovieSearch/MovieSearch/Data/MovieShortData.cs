@@ -2,7 +2,7 @@
 
 namespace MovieSearch.Data
 {
-    public class Movie
+    public class MovieShortData
     {
         public string Title { get; set; }
         public string Year { get; set; }

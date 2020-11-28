@@ -38,13 +38,13 @@ else
             <div class="col-lg-2 col-sm-2">
                 <p>IMDB Rating: @movieDataResult.Value.ImdbRating</p>
             </div>
-            <div class="col-lg-2 col-sm-2">
+            <div class="col-lg-3 col-sm-3">
                 <p>IMDB Votes: @movieDataResult.Value.ImdbVotes</p>
             </div>
             <div class="col-lg-2 col-sm-4">
                 <p>Metascore: @movieDataResult.Value.Metascore</p>
             </div>
-            <div class="col-lg-1 col-sm-4">
+            <div class="col-lg-2 col-sm-4">
                 <p>Rated: @movieDataResult.Value.Rated</p>
             </div>
         </div>
@@ -67,27 +67,24 @@ else
                         <p>Released: @movieDataResult.Value.Released.ToString("yyyy-MM-dd")</p>
                         <p>Production: @movieDataResult.Value.Production</p>
                         <p>Language: @movieDataResult.Value.Language</p>
+                        <p>Actors: @movieDataResult.Value.Actors</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <h2>Ratings:</h2>
+                <h3>Ratings from other website:</h3>
             </div>
         </div>
-        @foreach (var rating in movieDataResult.Value.Ratings)
-        {
-            <div class="row">
-                <div class="col">
-                    <p>Source: @rating.Source</p>
-                    <p>Value: @rating.Value</p>
-                </div>
-            </div>
-        }
-        <p>Actors: @movieDataResult.Value.Actors</p>
-        <p>Wesite: @movieDataResult.Value.Website</p>
-
+        <div class="row">
+            <ul class="list-group list-group-flush">
+                @foreach (var rating in movieDataResult.Value.Ratings)
+                {
+                    <li class="list-group-item"> @rating.Source: @rating.Value</li>
+                }
+            </ul>
+        </div>
     </div>
     }
 }
@@ -97,7 +94,7 @@ else
     [Parameter]
     public string Title { get; set; }
 
-    private Result<MovieData> movieDataResult;
+    private Result<MovieFullData> movieDataResult;
 
     protected override async Task OnInitializedAsync()
     {

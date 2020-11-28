@@ -17,7 +17,7 @@ namespace MovieSearch.Service
             _key = configuration.GetValue<string>("OMDb:Key");
         }
 
-        public async Task<Result<IEnumerable<Movie>>> FindMovies(string value)
+        public async Task<Result<IEnumerable<MovieShortData>>> FindMovies(string value)
         {
             var response = await "http://www.omdbapi.com/"
                 .SetQueryParams(new
@@ -31,13 +31,13 @@ namespace MovieSearch.Service
 
             if(!response.Response)
             {
-                return Result.Error<IEnumerable<Movie>>(response.Error);
+                return Result.Error<IEnumerable<MovieShortData>>(response.Error);
             }
 
             return Result.Ok(response.Search);
         }
 
-        public async Task<Result<MovieData>> GetMovieData(string title)
+        public async Task<Result<MovieFullData>> GetMovieData(string title)
         {
             var response = await "http://www.omdbapi.com/"
                 .SetQueryParams(new
@@ -47,11 +47,11 @@ namespace MovieSearch.Service
                     type = "movie"
                 })
                 .AllowAnyHttpStatus()
-                .GetJsonAsync<MovieData>();
+                .GetJsonAsync<MovieFullData>();
 
             if (!response.Response)
             {
-                return Result.Error<MovieData>(response.Error);
+                return Result.Error<MovieFullData>(response.Error);
             }
 
             return Result.Ok(response);

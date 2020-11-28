@@ -5,9 +5,9 @@
 @inject IOMDbService service
 
 <div class="movie-search" style="margin-bottom: 1rem; ">
-        <div class="form-inline my-2 my-lg-0" style="display: flex; ">
-            <input type="text" class="form-control mr-sm-2" style="width: auto; margin-right: 0.5rem" placeholder="Find a movie" @bind-value="@searchTerm" aria-label="Search" />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @onclick="FindMovies">Search</button>
+        <div class="form-inline my-2 my-lg-0 d-flex justify-content-center" style="display: flex; ">
+            <input type="text" class="form-control mr-sm-2" style="width: 80%; margin-right: 0.5rem" placeholder="Find a movie" @bind-value="@searchTerm" aria-label="Search" />
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" @onclick="FindMovies">Search</button>
         </div>
 </div>
 <div class="movies" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center">
@@ -30,7 +30,7 @@
                         <h5 class="card-title">@movie.Title</h5>
                         <p class="card-text">Year: @movie.Year</p>
                         <p class="card-text">IMDB ID: @movie.ImdbID</p>
-                        <a class="btn btn-primary" href="/Movie/@movie.Title">More info</a>
+                        <a class="btn btn-outline-primary" href="/Movie/@movie.Title">More info</a>
                     </div>
                 </div>
                 }
@@ -41,7 +41,7 @@
 @code
 {
     private string searchTerm;
-    private Result<IEnumerable<Movie>> moviesResult;
+    private Result<IEnumerable<MovieShortData>> moviesResult;
 
     private async Task FindMovies()
     {

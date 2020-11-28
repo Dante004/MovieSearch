@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace MovieSearch.Data
 {
-    public class MovieData
+    public class MovieFullData : MovieShortData
     {
-        public string Title { get; set; }
-        public string Year { get; set; }
         public string Rated { get; set; }
         public DateTime Released { get; set; }
         public string Runtime { get; set; }
@@ -17,12 +15,10 @@ namespace MovieSearch.Data
         public string Plot { get; set; }
         public string Language { get; set; }
         public string Country { get; set; }
-        public string Poster { get; set; }
         public IEnumerable<Rating> Ratings { get; set; }
-        public int Metascore { get; set; }
+        public string Metascore { get; set; }
         public float ImdbRating { get; set; }
         public string ImdbVotes { get; set; }
-        public string ImdbID { get; set; }
         public string DVD { get; set; }
         public string BoxOffice { get; set; }
         public string Production { get; set; }
